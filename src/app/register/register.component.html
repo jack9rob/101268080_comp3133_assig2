@@ -1,0 +1,50 @@
+<app-nav [isLoggedIn]="false"></app-nav>
+    
+<main>
+    <form [formGroup]="registerForm" (submit)="registerUser()">
+        <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username" required>
+            <mat-hint class="error" [hidden]="!usernameError" color="red">Username already taken</mat-hint>
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="firstname" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="lastname" required>
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required>
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" required>
+            <mat-hint class="error" [hidden]="!passwordError" color="red">Password doesn't match</mat-hint>
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field>
+            <mat-label>Select User</mat-label>
+            <mat-select formControlName="type">
+                <mat-option value="customer">customer</mat-option>
+                <mat-option value="admin">admin</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </p>
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+    </form>
+</main>

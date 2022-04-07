@@ -1,0 +1,13 @@
+<app-nav [isLoggedIn]="isLoggedIn"></app-nav>
+
+<main>
+    <div class="container">
+        <div [hidden]="bookings.length==0">
+            <h2>No Bookings :(</h2>
+        </div>
+        <mat-card color="primary" *ngFor="let book of bookings" color="accent">
+            <mat-card-title color="accent">{{ book['booking_start'] | date }} - {{ book['booking_end'] | date }}</mat-card-title>
+            <button mat-raised-button color="primary" [routerLink]="['/listing', book['listing_id']]">View Listing</button>
+        </mat-card>
+    </div>
+</main>

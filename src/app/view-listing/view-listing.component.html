@@ -1,0 +1,53 @@
+<app-nav [isLoggedIn]="isLoggedIn"></app-nav>
+
+<main>
+    <div *ngIf="loading; then ifLoading else elseLoading"></div>
+</main>
+
+<ng-template #ifLoading>
+    <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #elseLoading>
+    <div *ngIf="isBooked; then thenBlock else elseBlock"></div>
+</ng-template>
+
+<ng-template #thenBlock>
+    <!-- Confirm Booking-->
+    Do you want to book {{ listing['listing_title'] }} from {{ startDate | date }} to {{ endDate | date }}?
+    <br>
+    <button class="btn btn-danger" role="button" (click)="cancel()">Cancel</button>
+    <button  class="btn btn-primary" role="button" (click)="bookListing()">Confirm</button>
+</ng-template>
+<ng-template #elseBlock>
+    <!-- Get Bookings Booking-->
+    <mat-card color="primary" color="accent">
+        <mat-card-title color="accent">{{ listing["listing_title"] }} </mat-card-title>
+        <mat-card-subtitle>{{ listing['street'] }}, {{ listing['city'] }}, {{ listing['postal_code'] }} </mat-card-subtitle>
+        <mat-card-title>{{ listing['price'] | currency }}</mat-card-title>
+        <br>
+        <mat-card-content>{{ listing['description'] }}</mat-card-content>
+        <mat-card-subtitle>{{ listing['email'] }}</mat-card-subtitle>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>
+            Book Listing
+        </mat-card-title>
+        <mat-card-content>
+            <br>
+            <mat-label>Enter a date range</mat-label>
+            <br>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+              <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-card-content>
+        <mat-card-actions> 
+            <button mat-raised-button color="primary" role="button" (click)="bookStart()">Book</button>
+        </mat-card-actions>
+    </mat-card>
+    
+</ng-template>
+

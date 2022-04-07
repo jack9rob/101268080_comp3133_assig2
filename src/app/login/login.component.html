@@ -1,0 +1,23 @@
+<app-nav [isLoggedIn]="isLoggedIn"></app-nav>
+
+<main>
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="username" required>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="password" type="password">
+  </mat-form-field>
+  <br>
+  <button mat-raised-button color="primary" (click)="login()">Login</button>
+  <div [hidden]="!error">
+    Username or password incorrect
+  </div>
+  <br>
+  <div>
+    Don't have an account. <a routerLink="/register" routerLinkActive="active">Register</a>
+  </div>
+</main>
+

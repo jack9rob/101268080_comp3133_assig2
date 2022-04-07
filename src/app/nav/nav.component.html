@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <span>Application</span>
+  <span></span>
+  <button mat-button routerLink="/" routerLinkActive="active">
+    Home
+  </button>
+  <span *ngIf="isLoggedIn; then thenBlock else elseBlock"></span>
+  <ng-template [ngIf]="isAdmin">
+    <span>
+      <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/add/listing" routerLinkActive="active">Add Listing</button>
+      </mat-menu>
+    </span>
+  </ng-template>
+</mat-toolbar>
+
+
+<ng-template #thenBlock>
+  <button mat-button routerLink="/bookings" routerLinkActive="active">
+    Bookings
+  </button>
+  <span class="example-spacer"></span>
+  <button mat-button (click)="logout()" routerLink="/" routerLinkActive="active">
+    Logout
+  </button>
+</ng-template>
+<ng-template #elseBlock>
+  <button mat-button routerLink="/login" routerLinkActive="active">
+    Login
+  </button>
+</ng-template>
