@@ -1,13 +1,20 @@
-<app-nav [isLoggedIn]="isLoggedIn"></app-nav>
+<app-nav [isLoggedIn]="isLoggedIn" [isAdmin]="isAdmin"></app-nav>
 
 <main>
+    <div *ngIf="loading; then ifLoading else elseLoading"></div>
+</main>
+
+<ng-template #ifLoading>
+    <mat-spinner></mat-spinner>
+</ng-template>
+
+<ng-template #elseLoading>
     <div class="container">
-        <div [hidden]="bookings.length==0">
-            <h2>No Bookings :(</h2>
-        </div>
+        <h1>My Bookings!</h1>
         <mat-card color="primary" *ngFor="let book of bookings" color="accent">
             <mat-card-title color="accent">{{ book['booking_start'] | date }} - {{ book['booking_end'] | date }}</mat-card-title>
+            <mat-card-subtitle>Booked on {{ book['booking_date'] | date }}</mat-card-subtitle>
             <button mat-raised-button color="primary" [routerLink]="['/listing', book['listing_id']]">View Listing</button>
         </mat-card>
     </div>
-</main>
+</ng-template>

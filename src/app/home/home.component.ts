@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn = false;
   isAdmin = false;
-  user = {}
+  user:any = {}
   listings = []
   search:string = ""
   searchOption: string = "none"
@@ -35,23 +35,20 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.apolloClient.watchQuery<any>({
-      query: this.GET_LISTINGS,
-      
+      query: this.GET_LISTINGS
     }).valueChanges.subscribe(response => {
-      console.log(response.data.getListings)
       this.listings = response.data?.getListings
-    })
 
-    this.authService.getUsername().subscribe((data) => {
-      console.log(data)
-      const user:any = data
-      if(user.isLoggedIn){
-        this.isLoggedIn = true
-        if(user.type == "admin") {
-          this.isAdmin = true
+      this.authService.getUsername().subscribe((data) => {
+        const user:any = data
+        if(user.isLoggedIn){
+          this.isLoggedIn = true
+          this.user = user.user
+          if(this.user.type == "admin") {
+            this.isAdmin = true
+          }
         }
-        this.user = user.user
-      }
+      })
     })
   }
 

@@ -1,4 +1,4 @@
-<app-nav [isLoggedIn]="isLoggedIn"></app-nav>
+<app-nav [isLoggedIn]="isLoggedIn" [isAdmin]="isAdmin"></app-nav>
 
 <main>
     <div *ngIf="loading; then ifLoading else elseLoading"></div>
@@ -9,18 +9,6 @@
 </ng-template>
 
 <ng-template #elseLoading>
-    <div *ngIf="isBooked; then thenBlock else elseBlock"></div>
-</ng-template>
-
-<ng-template #thenBlock>
-    <!-- Confirm Booking-->
-    Do you want to book {{ listing['listing_title'] }} from {{ startDate | date }} to {{ endDate | date }}?
-    <br>
-    <button class="btn btn-danger" role="button" (click)="cancel()">Cancel</button>
-    <button  class="btn btn-primary" role="button" (click)="bookListing()">Confirm</button>
-</ng-template>
-<ng-template #elseBlock>
-    <!-- Get Bookings Booking-->
     <mat-card color="primary" color="accent">
         <mat-card-title color="accent">{{ listing["listing_title"] }} </mat-card-title>
         <mat-card-subtitle>{{ listing['street'] }}, {{ listing['city'] }}, {{ listing['postal_code'] }} </mat-card-subtitle>
@@ -29,6 +17,11 @@
         <mat-card-content>{{ listing['description'] }}</mat-card-content>
         <mat-card-subtitle>{{ listing['email'] }}</mat-card-subtitle>
     </mat-card>
+    <div *ngIf="isBooked; then thenBlock else elseBlock"></div>
+</ng-template>
+
+<!-- Get Bookings Booking-->
+<ng-template #elseBlock>
     <mat-card>
         <mat-card-title>
             Book Listing
@@ -48,6 +41,37 @@
             <button mat-raised-button color="primary" role="button" (click)="bookStart()">Book</button>
         </mat-card-actions>
     </mat-card>
-    
+</ng-template>
+
+<!-- Confirm Booking-->
+<ng-template #thenBlock>
+    <div *ngIf="bookingDone; then bookDone else notBooked "></div>
+</ng-template>
+
+<ng-template #notBooked>
+    <mat-card>
+        <mat-card-title>
+            Book        
+        </mat-card-title>
+        <mat-card-content>
+            Do you want to book {{ listing['listing_title'] }} from {{ startDate | date }} to {{ endDate | date }}?
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" role="button" (click)="bookListing()">Confirm Book</button>
+            <button mat-raised-button color="accent" role="button" (click)="cancel()">Cancel</button>
+        </mat-card-actions>
+    </mat-card>
+</ng-template>
+
+<ng-template #bookDone>
+    <mat-card>
+        <mat-card-title>
+           {{ listing['listing_title'] }} Booked!
+        </mat-card-title>
+        <mat-card-actions> 
+            <button mat-raised-button color="primary" routerLink="/" routerLinkActive="active">Home</button>
+            <button mat-raised-button color="primary" routerLink="/bookings" routerLinkActive="active">View Bookings</button>
+        </mat-card-actions>
+    </mat-card>
 </ng-template>
 

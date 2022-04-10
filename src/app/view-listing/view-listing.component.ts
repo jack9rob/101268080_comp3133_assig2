@@ -12,6 +12,8 @@ export class ViewListingComponent implements OnInit {
 
   id:any = "62094fa22cf4"
   isBooked = false;
+  bookingDone = false;
+  isAdmin = false
   listing: any
   user: any = {}
   isLoggedIn = false
@@ -34,8 +36,8 @@ export class ViewListingComponent implements OnInit {
   }`
 
   ADD_BOOKING = gql`
-    mutation CreateBooking($listing_id: String!, $booking_date: String!, $booking_start: String!, $booking_end: String! $username: String!){
-      createBooking(listing_id: $listing_id, booking_date: $booking_date, booking_start: $booking_start, booking_end: $booking_end, username: $username) {
+    mutation CreateBooking($booking_id: String, $listing_id: String!, $booking_date: String!, $booking_start: String!, $booking_end: String! $username: String!){
+      createBooking(booking_id: $booking_id, listing_id: $listing_id, booking_date: $booking_date, booking_start: $booking_start, booking_end: $booking_end, username: $username) {
         booking_start,
         booking_end
       }
@@ -58,6 +60,9 @@ export class ViewListingComponent implements OnInit {
       if(user.isLoggedIn){
         this.isLoggedIn = true
         this.user = user.user
+        if(this.user.type == "admin") {
+          this.isAdmin = true
+        }
       } else {
         this.router.navigateByUrl('/login')
       }
@@ -90,16 +95,15 @@ export class ViewListingComponent implements OnInit {
     let date: any = new Date()
     let tempStart:any = new Date(this.startDate)
     let tempEnd:any = new Date(this.endDate)
-    tempStart = tempStart.toLocaleDateString()
-    tempEnd = tempEnd.toLocaleDateString()
-    date = date.toLocaleDateString()
+    let salt = Math.floor(Math.random() * 1000)
     console.log(date)
     console.log(tempStart)
     console.log(tempEnd)
     this.apolloClient.mutate({
       mutation: this.ADD_BOOKING,
       variables: {
-        listing_id: this.listing.listing_id,
+        booking_id: `${this.user.username}-${date}${tempStart}${tempEnd}-${salt}`,
+        listing_id: this.listing._id,
         booking_date: date,
         booking_start: tempStart,
         booking_end: tempEnd,
@@ -107,8 +111,11 @@ export class ViewListingComponent implements OnInit {
       }
     }).subscribe(resp => {
       console.log(resp)
+      //this.router.navigate(['bookings']);
+      this.bookingDone = true
+      console.log(this.bookingDone)
     })
-    //this.router.navigateByUrl('/bookings')
+    
     
   }
 

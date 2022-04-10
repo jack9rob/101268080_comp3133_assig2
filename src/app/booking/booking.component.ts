@@ -13,7 +13,9 @@ export class BookingComponent implements OnInit {
 
   bookings = []
   isLoggedIn = false
+  isAdmin = false
   user: any = {}
+  loading = true
 
   GET_BOOKINGS = gql`
   query getBookingsByUser($username: String!){
@@ -41,6 +43,9 @@ export class BookingComponent implements OnInit {
         // user is logged in
         this.isLoggedIn = true
         this.user = resp.user
+        if(this.user.type == "admin") {
+          this.isAdmin = true
+        }
         // get users bookings
         this.apolloClient.watchQuery<any>({
           query: this.GET_BOOKINGS,
@@ -49,8 +54,11 @@ export class BookingComponent implements OnInit {
           }
         }).valueChanges.subscribe(res => {
           console.log(res.data)
-          this.bookings = res.data.getBookingsByUser
+          this.bookings = res.data?.getBookingsByUser
+          console.log(this.bookings)
+          this.loading=false
         })
+        console.log(this.bookings)
       } else {
         // return user to login page if not logged in
         this.router.navigateByUrl("/login")

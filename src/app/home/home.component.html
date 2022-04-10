@@ -1,44 +1,45 @@
 <app-nav [isLoggedIn]="isLoggedIn" [isAdmin]="isAdmin"></app-nav>
 
-<div class="container mt-3 align-middle">
-    <div class="row">
-        <div class="col-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control" [(ngModel)]="search" placeholder="Search...">
+
+    <div class="container mt-3 align-middle">
+        <div class="row">
+            <div class="col-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control" [(ngModel)]="search" placeholder="Search...">
+                </div>
+            </div>
+            <div class="col-2">
+                <select [(ngModel)]="searchOption">
+                    <option value="none" selected>---</option>
+                    <option value="title">title</option>
+                    <option value="city">city</option>
+                    <option value="postalcode">postalcode</option>
+                </select>
+            </div>
+            <div class="col-2 d-flex">
+                <button mat-raised-button color="primary" (click)="filter()">filter</button>
+                <a  mat-raised-button (click)="clearFilter()" color="accent" class="btn btn-light btn-sm text-decoration-none">clear</a>
             </div>
         </div>
-        <div class="col-2">
-            <select [(ngModel)]="searchOption">
-                <option value="none" selected>---</option>
-                <option value="title">title</option>
-                <option value="city">city</option>
-                <option value="postalcode">postalcode</option>
-            </select>
-        </div>
-        <div class="col-1 d-flex">
-            <button mat-button color="primary" (click)="filter()">filter</button>
-            <a (click)="clearFilter()" class="btn btn-light btn-sm text-decoration-none">clear</a>
-        </div>
     </div>
-</div>
 
-<hr>
-
-<div class="container">
-    <div [hidden]="listings">
-        <h2>No Listings :(</h2>
+    <hr>
+    <main>
+    <div class="container">
+        <div [hidden]="listings">
+            <h2>No Listings :(</h2>
+        </div>
+        <mat-card color="primary" *ngFor="let listing of listings" color="accent">
+            <mat-card-title color="accent">{{ listing["listing_title"] }} </mat-card-title>
+            <mat-card-subtitle>{{ listing['street'] }}, {{ listing['city'] }}, {{ listing['postal_code'] }} </mat-card-subtitle>
+            <mat-card-title>{{ listing['price'] | currency }}</mat-card-title>
+            <br>
+            <mat-card-content><strong>Description: </strong>{{ listing['description'] }}</mat-card-content>
+            <mat-card-actions> 
+                <button [hidden]="!isLoggedIn"  mat-raised-button color="primary" [routerLink]="['/listing', listing['_id']]">Book</button>
+            </mat-card-actions>
+            <mat-card-subtitle>email: {{ listing['email'] }}</mat-card-subtitle>
+        </mat-card>
     </div>
-    <mat-card color="primary" *ngFor="let listing of listings" color="accent">
-        <mat-card-title color="accent">{{ listing["listing_title"] }} </mat-card-title>
-        <mat-card-subtitle>{{ listing['street'] }}, {{ listing['city'] }}, {{ listing['postal_code'] }} </mat-card-subtitle>
-        <mat-card-title>{{ listing['price'] | currency }}</mat-card-title>
-        <br>
-        <mat-card-content>{{ listing['description'] }}</mat-card-content>
-        <mat-card-actions> 
-            <button mat-raised-button color="primary" [routerLink]="['/listing', listing['_id']]">Book</button>
-        </mat-card-actions>
-        <mat-card-subtitle>{{ listing['email'] }}</mat-card-subtitle>
-    </mat-card>
-</div>
-
+</main>
 

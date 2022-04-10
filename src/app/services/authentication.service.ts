@@ -10,16 +10,11 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  public getCurrentUser() {
-
-  }
-
   public getUsername() {
     let token = localStorage.getItem("token")
     if(!token) {
       token = "token"
     }
-    console.log(localStorage.getItem("token"))
     let headers = new HttpHeaders()
     headers = headers.set('x-access-token', token)
      return this.http.get('http://localhost:4000/api/auth/getUsername', {

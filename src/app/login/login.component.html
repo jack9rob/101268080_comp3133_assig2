@@ -1,23 +1,31 @@
 <app-nav [isLoggedIn]="isLoggedIn"></app-nav>
 
 <main>
-  <mat-form-field appearance="fill">
-    <mat-label>Username</mat-label>
-    <input matInput [(ngModel)]="username" required>
-  </mat-form-field>
+  <mat-card>
+  <mat-card-title>Login</mat-card-title>
   <br>
-  <mat-form-field appearance="fill">
-    <mat-label>Password</mat-label>
-    <input matInput [(ngModel)]="password" type="password">
-  </mat-form-field>
+  <mat-card-content>
+    <div [hidden]="!error" class="error"><p>username or password incorrect</p></div>
+    <form [formGroup]="loginForm" (submit)="login()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required>
+      </mat-form-field>
+      <br>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
   <br>
-  <button mat-raised-button color="primary" (click)="login()">Login</button>
-  <div [hidden]="!error">
-    Username or password incorrect
-  </div>
-  <br>
-  <div>
+  <mat-card-footer>
     Don't have an account. <a routerLink="/register" routerLinkActive="active">Register</a>
-  </div>
+  </mat-card-footer>
+</mat-card>
 </main>
 

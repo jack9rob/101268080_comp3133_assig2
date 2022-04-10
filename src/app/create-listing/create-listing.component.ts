@@ -48,7 +48,7 @@ export class CreateListingComponent implements OnInit {
         this.user = user.user
         this.listingForm.controls['username'].setValue(this.user.username)
         if(this.user.type != "admin") {
-          this.router.navigateByUrl('/login')
+          this.router.navigateByUrl('/')
         }
       } else {
         this.router.navigateByUrl('/login')
