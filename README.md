@@ -21,7 +21,7 @@ Booking system where users can view available listing and can login to book the 
 #### User Registration
 ![registration](https://github.com/jack9rob/101268080_comp3133_assig2/blob/main/screenshots/user_registration.png?raw=true)
 ![registration password error](https://github.com/jack9rob/101268080_comp3133_assig2/blob/main/screenshots/user_registration_password_error.png?raw=true)
-![registration username error](https://github.com/jack9rob/101268080_comp3133_assig2/blob/main/screenshots/user_registration_username/ error.png?raw=true)
+![registration username error](https://github.com/jack9rob/101268080_comp3133_assig2/blob/main/screenshots/user_registration_username_error.png?raw=true)
 
 #### Booking
 ![view listing](https://github.com/jack9rob/101268080_comp3133_assig2/blob/main/screenshots/view_listing.png?raw=true)
