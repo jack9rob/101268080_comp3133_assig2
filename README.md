@@ -9,5 +9,5 @@ Booking system where users can view available listing and can login to book the 
 - view user bookings
 
 ## Screenshots
-
+![alt text](https://github.com/jack9rob/101268080_comp3133_assig2/blob/main/screenshots?raw=true)
 
